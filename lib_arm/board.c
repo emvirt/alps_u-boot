@@ -305,9 +305,40 @@ init_fnc_t *init_sequence[] = {
 	display_dram_config,
 	NULL,
 };
+/*HJPARK CSU*/
+int CSU_init()
+{
+        unsigned long *addr;
+        unsigned long ad = 0x021c0000;
+        addr=(unsigned long*)ad;
+        unsigned long  usdhc1_val=0x300bb;
+        unsigned long  usb_val=0xbb0003;
+//	unsigned long  sdma_val=0x3300bb;
+        unsigned long  base_val=0xbb00bb;
+        int i;
+
+        for(i=0; i<40; i++){                                                    
+                *addr=base_val;
+                addr++;
+        }
+
+	addr=(unsigned long*)ad;
+    //    *(addr+7)=sdma_val;
+        *(addr+8) = usb_val;
+//	*(addr+9) = usdhc1_val;
+
+//	*(addr+1)=timer_val;
+//	*(addr+6)=timer_val;
+//	*(addr+35)=uart_val;
+//	*(addr+10)=uart_val;		
+
+      return 0;
+}
+
 
 void start_armboot (void)
 {
+ 	CSU_init();
 	init_fnc_t **init_fnc_ptr;
 	char *s;
 #if defined(CONFIG_VFD) || defined(CONFIG_LCD)
@@ -492,6 +523,8 @@ extern void davinci_eth_set_mac_addr (const u_int8_t *addr);
 #ifdef CONFIG_FASTBOOT
 	check_fastboot_mode();
 #endif
+
+
 	/* main_loop() can return to retry autoboot, if so just run it again. */
 	for (;;) {
 		main_loop ();

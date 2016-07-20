@@ -348,6 +348,10 @@ void putc(const char c)
 
 void puts(const char *s)
 {
+//hjpark
+        char *color="0[33;1m";
+        color[0] = 0x1b;
+
 #ifdef CONFIG_SILENT_CONSOLE
 	if (gd->flags & GD_FLG_SILENT)
 		return;
@@ -360,9 +364,11 @@ void puts(const char *s)
 
 	if (gd->flags & GD_FLG_DEVINIT) {
 		/* Send to the standard output */
+                fputs(stdout, color);   //hjpark   
 		fputs(stdout, s);
 	} else {
 		/* Send directly to the handler */
+		serial_puts(color);	//hjpark
 		serial_puts(s);
 	}
 }

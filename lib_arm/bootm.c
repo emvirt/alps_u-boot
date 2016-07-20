@@ -29,6 +29,7 @@
 #include <asm/byteorder.h>
 
 #include <bootimg.h>
+//HJPARK extern ulong uboot_start;		
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -65,7 +66,7 @@ int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
 	char	*s;
 	int	machid = bd->bi_arch_number;
 	void	(*theKernel)(int zero, int arch, uint params);
-
+	ulong end;
 #ifdef CONFIG_CMDLINE_TAG
 	char *commandline = getenv ("bootargs");
 #endif
@@ -127,7 +128,8 @@ int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
 #endif
 
 	cleanup_before_linux ();
-
+//HJPARK	end = get_timer(uboot_start);
+//HJPARK	printf("end time : %lu\n",end);
 	theKernel (0, machid, bd->bi_boot_params);
 	/* does not return */
 

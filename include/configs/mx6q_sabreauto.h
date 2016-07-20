@@ -116,7 +116,7 @@
 
 #define CONFIG_CMD_IMX_DOWNLOAD_MODE
 
-#define CONFIG_BOOTDELAY 3
+#define CONFIG_BOOTDELAY 0
 
 #define CONFIG_PRIME	"FEC0"
 
@@ -148,7 +148,7 @@
  * Miscellaneous configurable options
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
-#define CONFIG_SYS_PROMPT		"MX6Q SABREAUTO U-Boot > "
+#define CONFIG_SYS_PROMPT		"MX6Q SABREAUTO U-Boot Secure > "
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */
 /* Print Buffer Size */

@@ -270,7 +270,7 @@ static __inline__ int abortboot(int bootdelay)
 #endif	/* CONFIG_BOOTDELAY >= 0  */
 
 /****************************************************************************/
-
+ulong uboot_start;
 void main_loop (void)
 {
 #ifndef CONFIG_SYS_HUSH_PARSER
@@ -478,7 +478,7 @@ void main_loop (void)
 			puts ("<INTERRUPT>\n");
 		else
 			rc = run_command (lastcommand, flag);
-
+		
 		if (rc <= 0) {
 			/* invalid command or not repeatable, forget it */
 			lastcommand[0] = 0;
