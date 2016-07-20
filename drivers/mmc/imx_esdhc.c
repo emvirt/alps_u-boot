@@ -166,6 +166,7 @@ static int esdhc_setup_data(struct mmc *mmc, struct mmc_data *data)
 static int
 esdhc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd, struct mmc_data *data)
 {
+
 	uint	xfertyp, mixctrl;
 	uint	irqstat;
 	u32	tmp, sysctl_restore = 0;
@@ -224,9 +225,9 @@ esdhc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd, struct mmc_data *data)
 	/* Mask all irqs */
 	writel(0, &regs->irqsigen);
 
-	/* Wait for the command to complete */
-	while (!(readl(&regs->irqstat) & (IRQSTAT_CC | IRQSTAT_CTOE)))
-		;
+//kwlee	/* Wait for the command to complete */
+//	while (!(readl(&regs->irqstat) & (IRQSTAT_CC | IRQSTAT_CTOE)))
+//		;
 
 	irqstat = readl(&regs->irqstat);
 	writel(irqstat, &regs->irqstat);

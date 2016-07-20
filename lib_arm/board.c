@@ -176,7 +176,7 @@ static int init_baudrate (void)
 
 static int display_banner (void)
 {
-	printf ("\n\n%s\n\n", version_string);
+//kwlee	printf ("\n\n%s\n\n", version_string);
 	debug ("U-Boot code: %08lX -> %08lX  BSS: -> %08lX\n",
 	       _armboot_start, _bss_start, _bss_end);
 #ifdef CONFIG_MODEM_SUPPORT
@@ -277,37 +277,38 @@ int print_cpuinfo (void);
 
 init_fnc_t *init_sequence[] = {
 #if defined(CONFIG_ARCH_CPU_INIT)
-	arch_cpu_init,		/* basic arch cpu dependent setup */
+//	arch_cpu_init,		/* basic arch cpu dependent setup */
 #endif
-	board_init,		/* basic board dependent setup */
+//	board_init,		/* kwlee: basic board dependent setup */
 #if defined(CONFIG_USE_IRQ)
 	interrupt_init,		/* set up exceptions */
 #endif
 	timer_init,		/* initialize timer */
 	env_init,		/* initialize environment */
-	init_baudrate,		/* initialze baudrate settings */
-	serial_init,		/* serial communications setup */
+	init_baudrate,		/* kwlee: initialze baudrate settings */
+	serial_init,		/* kwlee:serial communications setup */
 	console_init_f,		/* stage 1 init of console */
-	display_banner,		/* say that we are here */
+//	display_banner,		/* say that we are here */
 #if defined(CONFIG_DISPLAY_CPUINFO)
-	print_cpuinfo,		/* display cpu info (and speed) */
+//kwlee	print_cpuinfo,		/* display cpu info (and speed) */
 #endif
 #if defined(CONFIG_DISPLAY_BOARDINFO)
-	checkboard,		/* display board info */
+//kwlee	checkboard,		/* display board info */
 #endif
 #if defined(CONFIG_HARD_I2C) || defined(CONFIG_SOFT_I2C)
-	init_func_i2c,
+//	init_func_i2c,		/* kwlee: initilize I2C bus controller */
 #endif
 	dram_init,		/* configure available RAM banks */
 #if defined(CONFIG_CMD_PCI) || defined (CONFIG_PCI)
 	arm_pci_init,
 #endif
-	display_dram_config,
+//kwlee	display_dram_config,
 	NULL,
 };
 
 void start_armboot (void)
 {
+
 	init_fnc_t **init_fnc_ptr;
 	char *s;
 #if defined(CONFIG_VFD) || defined(CONFIG_LCD)
@@ -383,12 +384,13 @@ void start_armboot (void)
 	AT91F_DataflashInit();
 	dataflash_print_info();
 #endif
-
+/*kwlee modi*/
 #ifdef CONFIG_GENERIC_MMC
-	puts ("MMC:   ");
-	mmc_initialize (gd->bd);
+//	puts ("MMC:   ");
+//	mmc_initialize (gd->bd);
 #endif
 
+//kwlee modi
 	/* initialize environment */
 	env_relocate ();
 
@@ -398,18 +400,15 @@ void start_armboot (void)
 #endif /* CONFIG_VFD */
 
 #ifdef CONFIG_SERIAL_MULTI
-	serial_initialize();
+	serial_initialize();		//kwlee
 #endif
-
 	/* IP Address */
 	gd->bd->bi_ip_addr = getenv_IPaddr ("ipaddr");
 
 #if defined CONFIG_SPLASH_SCREEN && defined CONFIG_VIDEO_MX5
 	setup_splash_image();
 #endif
-
 	stdio_init ();	/* get the devices list going. */
-
 	jumptable_init ();
 
 #if defined(CONFIG_API)
@@ -417,6 +416,7 @@ void start_armboot (void)
 	api_init ();
 #endif
 
+//kwlee	
 	console_init_r ();	/* fully init console as a device */
 
 #if defined(CONFIG_ARCH_MISC_INIT)
@@ -478,7 +478,7 @@ extern void davinci_eth_set_mac_addr (const u_int8_t *addr);
 #ifdef CONFIG_ANDROID_RECOVERY
 	check_recovery_mode();
 #endif
-
+/*kwlee
 #if defined(CONFIG_CMD_NET)
 #if defined(CONFIG_NET_MULTI)
 	puts ("Net:   ");
@@ -489,14 +489,20 @@ extern void davinci_eth_set_mac_addr (const u_int8_t *addr);
 	reset_phy();
 #endif
 #endif
+*/
 #ifdef CONFIG_FASTBOOT
 	check_fastboot_mode();
 #endif
+
+
+
+
+
 	/* main_loop() can return to retry autoboot, if so just run it again. */
 	for (;;) {
 		main_loop ();
-	}
 
+	}
 	/* NOTREACHED - no way out of command loop except booting */
 }
 

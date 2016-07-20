@@ -311,7 +311,7 @@ int _do_setenv (int flag, int argc, char *argv[])
 		*++env = '\0';
 	}
 
-	/* Delete only ? */
+/*kwlee	 Delete only ? */
 	if ((argc < 3) || argv[2] == NULL) {
 		env_crc_update ();
 		return 0;
@@ -350,7 +350,7 @@ int _do_setenv (int flag, int argc, char *argv[])
 	/* end is marked with double '\0' */
 	*++env = '\0';
 
-	/* Update CRC */
+	/* Update CRC */	//kwlee
 	env_crc_update ();
 
 	/*

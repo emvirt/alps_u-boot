@@ -32,6 +32,7 @@ static void *base;
  */
 int mxc_iomux_v3_setup_pad(iomux_v3_cfg_t pad)
 {
+	base = 0x020e0000;	//hjpark
 	u32 mux_ctrl_ofs = (pad & MUX_CTRL_OFS_MASK) >> MUX_CTRL_OFS_SHIFT;
 	u32 mux_mode = (pad & MUX_MODE_MASK) >> MUX_MODE_SHIFT;
 	u32 sel_input_ofs =
@@ -44,10 +45,8 @@ int mxc_iomux_v3_setup_pad(iomux_v3_cfg_t pad)
 
 	if (mux_ctrl_ofs)
 		__raw_writel(mux_mode, base + mux_ctrl_ofs);
-
 	if (sel_input_ofs)
 		__raw_writel(sel_input, base + sel_input_ofs);
-
 	if (!(pad_ctrl & NO_PAD_CTRL) && pad_ctrl_ofs) {
 		if (pad_ctrl & PAD_CTL_LVE) {
 			/* Set the bit for LVE */
@@ -56,7 +55,6 @@ int mxc_iomux_v3_setup_pad(iomux_v3_cfg_t pad)
 		}
 		__raw_writel(pad_ctrl, base + pad_ctrl_ofs);
 	}
-
 	return 0;
 }
 

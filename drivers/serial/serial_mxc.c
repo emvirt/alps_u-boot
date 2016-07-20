@@ -140,7 +140,7 @@ DECLARE_GLOBAL_DATA_PTR;
 
 void serial_setbrg (void)
 {
-	u32 clk = mxc_get_clock(MXC_UART_CLK);
+	u32 clk = 0x04c4b400;
 
 	if (!gd->baudrate)
 		gd->baudrate = CONFIG_BAUDRATE;

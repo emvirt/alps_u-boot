@@ -66,11 +66,11 @@
  * Hardware drivers
  */
 #define CONFIG_MXC_UART
-#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR
+#define CONFIG_UART_BASE_ADDR   UART3_BASE_ADDR
 
 /* allow to overwrite serial and ethaddr */
 #define CONFIG_ENV_OVERWRITE
-#define CONFIG_CONS_INDEX		1
+#define CONFIG_CONS_INDEX		1	/*kwlee*/
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_BAUDRATE_TABLE	{9600, 19200, 38400, 57600, 115200}
 
@@ -116,11 +116,12 @@
 
 #define CONFIG_CMD_IMX_DOWNLOAD_MODE
 
-#define CONFIG_BOOTDELAY 3
+//#define CONFIG_BOOTDELAY -1	//kwlee
+#define CONFIG_BOOTDELAY	-1
 
 #define CONFIG_PRIME	"FEC0"
 
-#define CONFIG_LOADADDR		0x10800000	/* loadaddr env var */
+#define CONFIG_LOADADDR		0x30008000	/* loadaddr env var modified by kwlee */
 #define CONFIG_RD_LOADADDR	(CONFIG_LOADADDR + 0x300000)
 
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
@@ -129,7 +130,7 @@
 		"uboot=u-boot.bin\0"			\
 		"kernel=uImage\0"				\
 		"nfsroot=/opt/eldk/arm\0"				\
-		"bootargs_base=setenv bootargs console=ttymxc3,115200\0"\
+		"bootargs_base=setenv bootargs console=ttymxc2,115200\0"\
 		"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs "\
 			"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"\
 		"bootcmd_net=run bootargs_base bootargs_nfs; "		\
@@ -139,8 +140,8 @@
 		"bootcmd_mmc=run bootargs_base bootargs_mmc; "   \
 		"mmc dev 2; "	\
 		"mmc read ${loadaddr} 0x800 0x2000; bootm\0"	\
-		"bootcmd=run bootcmd_mmc\0"                             \
-
+//kwlee		"bootcmd=run bootcmd_mmc\0"                            \ 
+		"bootcmd=bootm 0x30008000\0"				\
 
 #define CONFIG_ARP_TIMEOUT	200UL
 
@@ -148,16 +149,16 @@
  * Miscellaneous configurable options
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
-#define CONFIG_SYS_PROMPT		"MX6Q SABREAUTO U-Boot > "
+#define CONFIG_SYS_PROMPT		"MX6Q SABREAUTO U-Boot Normal > "
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */
 /* Print Buffer Size */
 #define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
 #define CONFIG_SYS_MAXARGS	16	/* max number of command args */
 #define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size */
-
-#define CONFIG_SYS_MEMTEST_START	0x10000000	/* memtest works on */
-#define CONFIG_SYS_MEMTEST_END		0x10010000
+//kwlee
+#define CONFIG_SYS_MEMTEST_START	0x30000000	/* memtest works on */
+#define CONFIG_SYS_MEMTEST_END		0x30010000
 
 #undef	CONFIG_SYS_CLKS_IN_HZ		/* everything, incl board info, in Hz */
 
@@ -248,8 +249,8 @@
 	#define CONFIG_GENERIC_MMC
 	#define CONFIG_IMX_MMC
 	#define CONFIG_SYS_FSL_USDHC_NUM        4
-	#define CONFIG_SYS_FSL_ESDHC_ADDR       0
-	#define CONFIG_SYS_MMC_ENV_DEV  2
+	#define CONFIG_SYS_FSL_ESDHC_ADDR       0 
+	#define CONFIG_SYS_MMC_ENV_DEV  2	/*kwlee 2->0*/
 	#define CONFIG_DOS_PARTITION	1
 	#define CONFIG_CMD_FAT		1
 	#define CONFIG_CMD_EXT2		1
@@ -314,7 +315,7 @@
  */
 #define CONFIG_NR_DRAM_BANKS	1
 #define PHYS_SDRAM_1		CSD0_DDR_BASE_ADDR
-#define PHYS_SDRAM_1_SIZE	(2u * 1024 * 1024 * 1024)
+#define PHYS_SDRAM_1_SIZE	(1u * 1024 * 1024 * 1024)	//kwlee(original 2u)
 #define iomem_valid_addr(addr, size) \
 	(addr >= PHYS_SDRAM_1 && addr <= (PHYS_SDRAM_1 + PHYS_SDRAM_1_SIZE))
 

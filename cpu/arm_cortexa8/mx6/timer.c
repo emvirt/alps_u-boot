@@ -168,6 +168,7 @@ void set_timer(ulong t)
 /* GPTCNT is now supposed to tick 1 by 1 us. */
 void udelay(unsigned long usec)
 {
+
 	unsigned long long tmp;
 	ulong tmo;
 

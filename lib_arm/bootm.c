@@ -1,3 +1,4 @@
+
 /*
  * (C) Copyright 2002
  * Sysgo Real-Time Solutions, GmbH <www.elinos.com>
@@ -61,8 +62,17 @@ static struct tag *params;
 
 int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
 {
+ //	images->ep = 0x30008040;
 	bd_t	*bd = gd->bd;
 	char	*s;
+//kwlee
+		/* address of boot parameters */
+	bd->bi_boot_params = PHYS_SDRAM_1 + 0x100;
+
+
+	/* board id for linux */
+	gd->bd->bi_arch_number = MACH_TYPE_MX6Q_SABREAUTO;
+
 	int	machid = bd->bi_arch_number;
 	void	(*theKernel)(int zero, int arch, uint params);
 
@@ -85,7 +95,7 @@ int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
 
 	debug ("## Transferring control to Linux (at address %08lx) ...\n",
 	       (ulong) theKernel);
-
+/*kwlee*/
 #if defined (CONFIG_SETUP_MEMORY_TAGS) || \
     defined (CONFIG_CMDLINE_TAG) || \
     defined (CONFIG_INITRD_TAG) || \
@@ -94,28 +104,37 @@ int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
     defined (CONFIG_LCD) || \
     defined (CONFIG_VFD)
 	setup_start_tag (bd);
+
+/*kwlee modi*/
 #ifdef CONFIG_SERIAL_TAG
-	setup_serial_tag (&params);
+//	setup_serial_tag (&params);
 #endif
 #ifdef CONFIG_REVISION_TAG
-	setup_revision_tag (&params);
+//	setup_revision_tag (&params);
 #endif
+
+
 #ifdef CONFIG_SETUP_MEMORY_TAGS
 	setup_memory_tags (bd);
 #endif
 #ifdef CONFIG_CMDLINE_TAG
 	setup_commandline_tag (bd, commandline);
 #endif
+
 #ifdef CONFIG_INITRD_TAG
 	if (images->rd_start && images->rd_end)
 		setup_initrd_tag (bd, images->rd_start, images->rd_end);
 #endif
+
 #if defined (CONFIG_VFD) || defined (CONFIG_LCD)
 	setup_videolfb_tag ((gd_t *) gd);
 #endif
+
 	setup_end_tag (bd);
+
 #endif
 
+//end modi
 	/* we assume that the kernel is in place */
 	printf ("\nStarting kernel ...\n\n");
 
@@ -126,7 +145,12 @@ int do_bootm_linux(int flag, int argc, char *argv[], bootm_headers_t *images)
 	}
 #endif
 
-	cleanup_before_linux ();
+//kwlee	
+//	cleanup_before_linux ();
+	
+	
+	/* address of boot parameters */
+//	bd->bi_boot_params = PHYS_SDRAM_1 + 0x100;
 
 	theKernel (0, machid, bd->bi_boot_params);
 	/* does not return */

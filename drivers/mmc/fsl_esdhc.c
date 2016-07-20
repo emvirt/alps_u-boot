@@ -189,7 +189,8 @@ esdhc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd, struct mmc_data *data)
 	out_be32(&regs->xfertyp, xfertyp);
 
 	/* Wait for the command to complete */
-	while (!(in_be32(&regs->irqstat) & IRQSTAT_CC));
+//kwlee	
+//	while (!(in_be32(&regs->irqstat) & IRQSTAT_CC));
 
 	irqstat = in_be32(&regs->irqstat);
 	out_be32(&regs->irqstat, irqstat);
@@ -214,9 +215,9 @@ esdhc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd, struct mmc_data *data)
 		cmd->response[3] = (cmdrsp0 << 8);
 	} else
 		cmd->response[0] = in_be32(&regs->cmdrsp0);
-
+//kwlee
 	/* Wait until all of the blocks are transferred */
-	if (data) {
+/*	if (data) {
 		do {
 			irqstat = in_be32(&regs->irqstat);
 
@@ -228,7 +229,7 @@ esdhc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd, struct mmc_data *data)
 		} while (!(irqstat & IRQSTAT_TC) &&
 				(in_be32(&regs->prsstat) & PRSSTAT_DLA));
 	}
-
+*/
 	out_be32(&regs->irqstat, -1);
 
 	return 0;

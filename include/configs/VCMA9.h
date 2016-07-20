@@ -171,7 +171,7 @@
 #define CONFIG_SYS_MEMTEST_END		0x30F80000	/* 15.5 MB in DRAM	*/
 
 #define CONFIG_SYS_ALT_MEMTEST
-#define	CONFIG_SYS_LOAD_ADDR		0x30800000	/* default load address	*/
+#define	CONFIG_SYS_LOAD_ADDR		0x30008000	/* default load address	*/
 
 /* we configure PWM Timer 4 to 1us ~ 1MHz */
 /*#define	CONFIG_SYS_HZ			1000000 */

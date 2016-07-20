@@ -156,13 +156,13 @@ d_inv_loop:
 .globl lowlevel_init
 lowlevel_init:
 
-	inv_dcache
+/*kwlee	inv_dcache
 
-	init_l2cc
+	init_l2cc	
 
 	init_aips
 
-	init_clock
+	init_clock	*/
 
 	mov pc, lr
 

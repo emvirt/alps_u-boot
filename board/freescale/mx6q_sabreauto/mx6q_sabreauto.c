@@ -323,10 +323,23 @@ static void setup_uart(void)
 {
 #if defined CONFIG_MX6Q
 	/* UART4 TXD */
+//kwlee	
 	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_COL0__UART4_TXD);
 
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD4_CLK__UART3_TXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD4_CMD__UART3_TXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D24__UART3_TXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D25__UART3_TXD);	
+	
 	/* UART4 RXD */
+//	
 	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_ROW0__UART4_RXD);
+
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD4_CLK__UART3_RXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD4_CMD__UART3_RXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D24__UART3_RXD);	
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D25__UART3_RXD);	
+	
 #elif defined CONFIG_MX6DL
 	/* UART4 TXD */
 	mxc_iomux_v3_setup_pad(MX6DL_PAD_KEY_COL0__UART4_TXD);
@@ -818,7 +831,6 @@ int usdhc_gpio_init(bd_t *bis)
 {
 	s32 status = 0;
 	u32 index = 0;
-
 	for (index = 0; index < CONFIG_SYS_FSL_USDHC_NUM;
 		++index) {
 		switch (index) {
@@ -977,6 +989,7 @@ int board_init(void)
 {
 	mxc_iomux_v3_init((void *)IOMUXC_BASE_ADDR);
 	setup_boot_device();
+//kwlee	
 	fsl_set_system_rev();
 
 	/* board id for linux */

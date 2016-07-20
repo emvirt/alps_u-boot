@@ -218,9 +218,11 @@ int stdio_init (void)
 #ifdef CONFIG_ARM_DCC_MULTI
 	drv_arm_dcc_init ();
 #endif
+/*kwlee*/
 #if defined(CONFIG_HARD_I2C) || defined(CONFIG_SOFT_I2C)
 	i2c_init (CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
 #endif
+
 #ifdef CONFIG_LCD
 	drv_lcd_init ();
 #endif

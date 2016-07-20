@@ -224,6 +224,8 @@ static int bootm_start(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 	/* get kernel image header, start address and length */
 	os_hdr = boot_get_kernel (cmdtp, flag, argc, argv,
 			&images, &images.os.image_start, &images.os.image_len);
+
+	
 	if (images.os.image_len == 0) {
 		puts ("ERROR: can't get kernel image!\n");
 		return 1;
@@ -329,6 +331,8 @@ static int bootm_start(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 #define BOOTM_ERR_UNIMPLEMENTED	-3
 static int bootm_load_os(image_info_t os, ulong *load_end, int boot_progress)
 {
+	//kwlee
+	//os.start = 0x30800000;
 	uint8_t comp = os.comp;
 	ulong load = os.load;
 	ulong blob_start = os.start;
@@ -342,7 +346,7 @@ static int bootm_load_os(image_info_t os, ulong *load_end, int boot_progress)
 	switch (comp) {
 	case IH_COMP_NONE:
 		if (load == blob_start) {
-			printf ("   XIP %s ... ", type_name);
+		printf ("   XIP %s ... ", type_name);
 		} else {
 			printf ("   Loading %s ... ", type_name);
 

@@ -198,6 +198,7 @@ cpu_init_crit:
 	/*
 	 * Invalidate L1 I/D
 	 */
+
 	mov	r0, #0			@ set up for MCR
 	mcr	p15, 0, r0, c8, c7, 0	@ invalidate TLBs
 	mcr	p15, 0, r0, c7, c5, 0	@ invalidate icache
@@ -205,6 +206,7 @@ cpu_init_crit:
 	/*
 	 * disable MMU stuff and caches
 	 */
+
 	mrc	p15, 0, r0, c1, c0, 0
 	bic	r0, r0, #0x00002000	@ clear bits 13 (--V-)
 	bic	r0, r0, #0x00000007	@ clear bits 2:0 (-CAM)
@@ -502,5 +504,5 @@ finished_inval:
 	mcr	p15, 0, r10, c7, c5, 4		@ flush prefetch buffer,
 						@ with armv7 this is 'isb',
 						@ but we compile with armv5
-
 	ldmfd	r13!, {r0 - r5, r7, r9 - r12, pc}
+	

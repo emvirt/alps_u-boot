@@ -350,6 +350,7 @@ void main_loop (void)
 	install_auto_complete();
 #endif
 
+	
 #ifdef CONFIG_PREBOOT
 	if ((p = getenv ("preboot")) != NULL) {
 # ifdef CONFIG_AUTOBOOT_KEYED
@@ -394,9 +395,12 @@ void main_loop (void)
 	else
 #endif /* CONFIG_BOOTCOUNT_LIMIT */
 		s = getenv ("bootcmd");
-
+//		*s = "bootm 0x30008000";
+		
 	debug ("### main_loop: bootcmd=\"%s\"\n", s ? s : "<UNDEFINED>");
 
+//	run_command (s, 0);		/*kwlee*/
+	
 	if (bootdelay >= 0 && s && !abortboot (bootdelay)) {
 # ifdef CONFIG_AUTOBOOT_KEYED
 		int prev = disable_ctrlc(1);	/* disable Control C checking */
@@ -435,7 +439,6 @@ void main_loop (void)
 	    video_banner();
 	}
 #endif
-
 	/*
 	 * Main Loop for Monitor Command Processing
 	 */
@@ -454,6 +457,7 @@ void main_loop (void)
 		}
 #endif
 		len = readline (CONFIG_SYS_PROMPT);
+//		len = -1;
 
 		flag = 0;	/* assume no special flags for now */
 		if (len > 0)
@@ -476,6 +480,7 @@ void main_loop (void)
 
 		if (len == -1)
 			puts ("<INTERRUPT>\n");
+//			run_command("bootm 0x30008000", flag);	
 		else
 			rc = run_command (lastcommand, flag);
 

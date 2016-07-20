@@ -186,7 +186,7 @@ int image_check_dcrc (image_header_t *hdr)
 	ulong data = image_get_data (hdr);
 	ulong len = image_get_data_size (hdr);
 	ulong dcrc = crc32_wd (0, (unsigned char *)data, len, CHUNKSZ_CRC32);
-
+//kwlee	ulong dcrc = 0x4aa35664; 
 	return (dcrc == image_get_dcrc (hdr));
 }
 
@@ -382,7 +382,7 @@ static image_header_t* image_get_ramdisk (ulong rd_addr, uint8_t arch,
 
 	show_boot_progress (10);
 	image_print_contents (rd_hdr);
-
+//kwlee
 	if (verify) {
 		puts("   Verifying Checksum ... ");
 		if (!image_check_dcrc (rd_hdr)) {

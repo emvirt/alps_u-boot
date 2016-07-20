@@ -68,6 +68,8 @@ int env_init(void)
 #else
 	mmc_env_devno = CONFIG_SYS_MMC_ENV_DEV;
 #endif
+/*kwlee*/
+	mmc_env_devno = 0;	
 
 	return 0;
 }
@@ -138,7 +140,7 @@ inline int read_env(struct mmc *mmc, unsigned long size,
 void env_relocate_spec(void)
 {
 #if !defined(ENV_IS_EMBEDDED)
-	struct mmc *mmc = find_mmc_device(mmc_env_devno);
+/*	struct mmc *mmc = find_mmc_device(mmc_env_devno);
 
 	if (init_mmc_for_env(mmc))
 		return;
@@ -148,7 +150,7 @@ void env_relocate_spec(void)
 
 	if (crc32(0, env_ptr->data, ENV_SIZE) != env_ptr->crc)
 		return use_default();
-
+*/
 	gd->env_valid = 1;
 #endif
 }

@@ -123,12 +123,12 @@
 
 /* CPU Memory Map */
 #ifdef CONFIG_MX6SL
-#define MMDC0_ARB_BASE_ADDR             0x80000000
+#define MMDC0_ARB_BASE_ADDR             0x80000000	/*kwlee*/
 #define MMDC0_ARB_END_ADDR              0xFFFFFFFF
 #define MMDC1_ARB_BASE_ADDR             0xC0000000
 #define MMDC1_ARB_END_ADDR              0xFFFFFFFF
 #else
-#define MMDC0_ARB_BASE_ADDR             0x10000000
+#define MMDC0_ARB_BASE_ADDR             0x30000000 /*kwlee*/
 #define MMDC0_ARB_END_ADDR              0x7FFFFFFF
 #define MMDC1_ARB_BASE_ADDR             0x80000000
 #define MMDC1_ARB_END_ADDR              0xFFFFFFFF

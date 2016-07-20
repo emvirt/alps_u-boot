@@ -121,7 +121,7 @@ int mmc_send_status(struct mmc *mmc, int timeout)
 	cmd.resp_type = MMC_RSP_R1;
 	cmd.cmdarg = mmc->rca << 16;
 	cmd.flags = 0;
-
+//kwlee
 	do {
 		err = mmc_send_cmd(mmc, &cmd, NULL);
 		if (err)
@@ -168,7 +168,8 @@ struct mmc *find_mmc_device(int dev_num)
 
 	list_for_each(entry, &mmc_devices) {
 		m = list_entry(entry, struct mmc, link);
-
+		//kwlee
+		//m->block_dev.dev = 1;
 		if (m->block_dev.dev == dev_num)
 			return m;
 	}
@@ -1567,7 +1568,7 @@ int mmc_init(struct mmc *mmc)
 	mmc_set_clock(mmc, 1);
 
 	/* Reset the Card */
-	err = mmc_go_idle(mmc);
+//kwlee	err = mmc_go_idle(mmc);
 
 	if (err)
 		return err;
@@ -1576,10 +1577,10 @@ int mmc_init(struct mmc *mmc)
 	mmc->part_num = 0;
 
 	/* Test for SD version 2 */
-	err = mmc_send_if_cond(mmc);
+//kwlee	err = mmc_send_if_cond(mmc);
 
 	/* Now try to get the SD card's operating condition */
-	err = sd_send_op_cond(mmc);
+//kwlee	err = sd_send_op_cond(mmc);
 
 	/* If the command timed out, we check for an MMC card */
 	if (err == TIMEOUT) {
@@ -1615,12 +1616,9 @@ void print_mmc_devices(char separator)
 {
 	struct mmc *m;
 	struct list_head *entry;
-
 	list_for_each(entry, &mmc_devices) {
 		m = list_entry(entry, struct mmc, link);
-
 		printf("%s: %d", m->name, m->block_dev.dev);
-
 		if (entry->next != &mmc_devices)
 			printf("%c", separator);
 	}
@@ -1638,10 +1636,10 @@ int mmc_initialize(bd_t *bis)
 	INIT_LIST_HEAD (&mmc_devices);
 	cur_dev_num = 0;
 
+//kwlee	
+//	
 	if (board_mmc_init(bis) < 0)
 		cpu_mmc_init(bis);
-
 	print_mmc_devices(',');
-
 	return 0;
 }
